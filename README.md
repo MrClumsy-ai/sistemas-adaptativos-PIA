@@ -1,3 +1,7 @@
+# TODO
+
+- [ ] hacer esqueletos con .tmpl
+
 ## Para iniciar el servidor:
 
 1. Instalar golang: https://go.dev/doc/install
@@ -15,8 +19,6 @@ go run main.go
 ```
 
 4. Ir a la ubicacion desde un navegador web: http://localhost:8080/
-
-# TODO
 
 ## Para trabajar
 
