@@ -4,6 +4,7 @@ import (
 	"database/sql"
 	"html/template"
 	"io"
+	"net/http"
 
 	"github.com/labstack/echo/v4"
 	_ "github.com/mattn/go-sqlite3"
@@ -46,5 +47,9 @@ func main() {
 	if err != nil {
 		e.Logger.Fatal("error creating mascota table", err)
 	} */
+
+	e.GET("/", func(c echo.Context) error {
+		return c.Render(http.StatusOK, "inicio", nil)
+	})
 	e.Logger.Fatal(e.Start(":" + PORT))
 }
