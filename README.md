@@ -1,3 +1,20 @@
+## Para iniciar el servidor:
+
+1. Instalar golang: https://go.dev/doc/install
+2. Ir al directorio en una terminal e instalar todos los paquetes del proyecto
+
+```
+cd ubicacion/del/proyecto
+go mod tidy
+```
+
+3. Correr el servidor con go run
+
+```
+go run main.go
+```
+
+4. Ir a la ubicacion desde un navegador web: http://localhost:8080/
 
 # TODO
 
