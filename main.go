@@ -34,7 +34,7 @@ func main() {
 	e.Renderer = newTemplate()
 	dbConnection, err := sql.Open("sqlite3", "pia.db")
 	if err != nil {
-		e.Logger.Fatal("error connecting to db: ", err)
+		e.Logger.Fatal("error connecting to db:", err)
 	}
 	defer dbConnection.Close()
 	/* _, err = dbConnection.Exec(`CREATE TABLE IF NOT EXISTS mascotas (
