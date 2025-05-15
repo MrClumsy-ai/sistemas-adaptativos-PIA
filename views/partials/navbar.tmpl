@@ -16,16 +16,16 @@
     <div class="collapse navbar-collapse" id="mynavbar">
       <ul class="navbar-nav ms-auto">
         <li class="nav-item">
-          <a class="nav-link {{ if eq .CurrentRoute "/" }}active{{ end }}" href="http://localhost:8080/">Inicio</a>
+          <a class="nav-link {{ if eq .CurrentRoute "/" }}active{{ end }}" href="{{ .URL }}/">Inicio</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link {{ if eq .CurrentRoute "/route2" }}active{{ end }}" href="http://localhost:8080/">Link 2</a>
+          <a class="nav-link {{ if eq .CurrentRoute "/route2" }}active{{ end }}" href="{{ .URL }}/">Link 2</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link {{ if eq .CurrentRoute "/route3" }}active{{ end }}" href="http://localhost:8080/">Link 3</a>
+          <a class="nav-link {{ if eq .CurrentRoute "/route3" }}active{{ end }}" href="{{ .URL }}/">Link 3</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link {{ if eq .CurrentRoute "/route4" }}active{{ end }}" href="http://localhost:8080/">Link 4</a>
+          <a class="nav-link {{ if eq .CurrentRoute "/route4" }}active{{ end }}" href="{{ .URL }}/">Link 4</a>
         </li>
       </ul>
     </div>
