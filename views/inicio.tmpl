@@ -9,11 +9,15 @@
     {{ template "librerias" .}}
   </head>
   <body >
-  {{ template "navbar" .}}
-    <main style="margin-top: 80px">
-    <h1> tu puta madre <h1>
-    <h2> tu puta madre 22312312 <h2>
-    </main>
+<div class="container">
+  <div class="header">Pascal</div>
+  <div class="subtitle">Dashboard Bitcoin</div>
+  <div class="main-content">
+      <div class="box" style="flex: 2;">Main Content</div>
+      <div class="box">Sidebar 1</div>
+      <div class="box">Sidebar 2</div>
+      </div>
+    </div>
   </body>
 </html>
 {{ end }}
