@@ -62,6 +62,19 @@ nvim . # para neovim
 
 ```
 git add .
-git commit -m "mensaje corto describiendo tus cambios"
-git push --rebase
+git commit -m "mensaje corto describiendo tus cambios" -m "mensaje mas largo describiendo los cambios"
+git pull --rebase
+git push
+```
+15. Si es que sale algún error en
+```git pull --rebase```
+abortar el rebase usando
+```git rebase --abort```
+usar ahora un git pull regular y arreglar los conflictos de merge
+```git pull```
+una vez resueltos los conflictos, hacer otro commit con el mensaje de "merge"
+```
+git add .
+git commit -m "merge"
+git push
 ```
