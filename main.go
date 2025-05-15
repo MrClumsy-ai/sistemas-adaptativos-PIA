@@ -49,6 +49,12 @@ func main() {
 		e.Logger.Fatal("error creating mascota table", err)
 	} */
 
+	type Counter struct {
+		Number int
+	}
+	counter := Counter{
+		Number: 0,
+	}
 	e.GET("/", func(c echo.Context) error {
 		/* ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 		defer cancel()
@@ -56,10 +62,11 @@ func main() {
 		if err != nil {
 			return c.HTML(http.StatusInternalServerError, "<h1>Internal server error</h1>")
 		} */
-
+		counter.Number += 1
 		response := map[string]any{
 			"URL":          URL,
 			"CurrentRoute": "/",
+			"Asdf":         counter,
 		}
 		return c.Render(http.StatusOK, "inicio", response)
 	})
