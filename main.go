@@ -51,8 +51,8 @@ func main() {
 
 	e.GET("/", func(c echo.Context) error {
 		response := map[string]any{
-			"CurrentRoute": "/",
 			"URL":          URL,
+			"CurrentRoute": "/",
 		}
 		return c.Render(http.StatusOK, "inicio", response)
 	})
