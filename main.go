@@ -33,10 +33,13 @@ func main() {
 	e := echo.New()
 	e.Static("/assets", "assets")
 	e.Renderer = newTemplate()
-	dbConnection, err := sql.Open("sqlite3", "pia.db")
+	const dbLocation = "pia.db"
+	dbConnection, err := sql.Open("sqlite3", dbLocation)
 	if err != nil {
-		e.Logger.Fatal("error connecting to db:", err)
+		e.Logger.Fatal("Error connecting to database:", err)
 	}
+	/* 	fmt.Println("Database connection established in", dbLocation) */
+	e.Logger.Printf("Database connection established in %v", dbLocation)
 	defer dbConnection.Close()
 	/* _, err = dbConnection.Exec(`CREATE TABLE IF NOT EXISTS mascotas (
 	id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -56,6 +59,7 @@ func main() {
 		if err != nil {
 			return c.HTML(http.StatusInternalServerError, "<h1>Internal server error</h1>")
 		} */
+		e.Logger.Printf("GET request for /")
 		response := map[string]any{
 			"URL":          URL,
 			"CurrentRoute": "/",
