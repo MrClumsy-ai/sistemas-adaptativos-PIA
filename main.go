@@ -11,6 +11,7 @@ import (
 )
 
 const PORT = "8080"
+const URL = "http://localhost:" + PORT
 
 type Templates struct {
 	templates *template.Template
@@ -51,7 +52,7 @@ func main() {
 	e.GET("/", func(c echo.Context) error {
 		response := map[string]any{
 			"CurrentRoute": "/",
-			"URL":          "http://localhost:8080",
+			"URL":          URL,
 		}
 		return c.Render(http.StatusOK, "inicio", response)
 	})
