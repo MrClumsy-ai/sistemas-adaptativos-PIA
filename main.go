@@ -10,8 +10,8 @@ import (
 	_ "github.com/mattn/go-sqlite3"
 )
 
-const PORT = "8080"
-const URL = "http://localhost:" + PORT
+const PORT = ":8080"
+const URL = "http://localhost" + PORT
 
 type Templates struct {
 	templates *template.Template
@@ -70,5 +70,5 @@ func main() {
 		}
 		return c.Render(http.StatusOK, "inicio", response)
 	})
-	e.Logger.Fatal(e.Start(":" + PORT))
+	e.Logger.Fatal(e.Start(PORT))
 }
