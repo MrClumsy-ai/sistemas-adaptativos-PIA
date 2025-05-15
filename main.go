@@ -49,7 +49,10 @@ func main() {
 	} */
 
 	e.GET("/", func(c echo.Context) error {
-		return c.Render(http.StatusOK, "inicio", nil)
+		response := map[string]any{
+			"CurrentRoute": "/",
+		}
+		return c.Render(http.StatusOK, "inicio", response)
 	})
 	e.Logger.Fatal(e.Start(":" + PORT))
 }
