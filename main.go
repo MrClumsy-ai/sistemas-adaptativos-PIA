@@ -67,12 +67,14 @@ func main() {
 		return c.Render(http.StatusOK, "inicio", response)
 	})
 
-	e.GET("/error", func(c echo.Context) error {
+	// catch all route
+	e.GET("/*", func(c echo.Context) error {
 		response := map[string]any{
-			"URL":   URL,
-			"Error": "500 Internal server error",
+			"URL":     URL,
+			"Code":    http.StatusNotFound,
+			"Message": "Not found",
 		}
-		return c.Render(http.StatusInternalServerError, "error", response)
+		return c.Render(http.StatusNotFound, "error", response)
 	})
 	e.Logger.Fatal(e.Start(PORT))
 }
