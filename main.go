@@ -38,10 +38,9 @@ func main() {
 	if err != nil {
 		e.Logger.Fatal("Error connecting to database:", err)
 	}
-	/* 	fmt.Println("Database connection established in", dbLocation) */
 	e.Logger.Printf("Database connection established in %v", dbLocation)
 	defer dbConnection.Close()
-	/* _, err = dbConnection.Exec(`CREATE TABLE IF NOT EXISTS mascotas (
+	/* _, err = dbConnection.Exec(`CREATE TABLE IF NOT EXISTS myTable (
 	id INTEGER PRIMARY KEY AUTOINCREMENT,
 	nombre TEXT NOT NULL,
 	edad INTEGER,
@@ -49,15 +48,21 @@ func main() {
 	foto BLOB,
 	descripcion TEXT)`)
 	if err != nil {
-		e.Logger.Fatal("error creating mascota table", err)
+		e.Logger.Fatal("Error creating myTable table", err)
 	} */
 
 	e.GET("/", func(c echo.Context) error {
 		/* ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 		defer cancel()
-		rows, err := dbConnection.QueryContext(ctx, "select * from mascotas")
+		rows, err := dbConnection.QueryContext(ctx, "SELECT * FROM myTable")
 		if err != nil {
-			return c.HTML(http.StatusInternalServerError, "<h1>Internal server error</h1>")
+			response := map[string]any{
+				"URL":     URL,
+				"Code":    http.StatusInternalServerError,
+				"Message": "Internal server error",
+			}
+			e.Logger.Error(err)
+			return c.Render(http.StatusInternalServerError, "error", response)
 		} */
 		e.Logger.Printf("GET request for /")
 		response := map[string]any{
