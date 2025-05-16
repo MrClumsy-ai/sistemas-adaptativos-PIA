@@ -66,5 +66,13 @@ func main() {
 		}
 		return c.Render(http.StatusOK, "inicio", response)
 	})
+
+	e.GET("/error", func(c echo.Context) error {
+		response := map[string]any{
+			"URL":   URL,
+			"Error": "500 Internal server error",
+		}
+		return c.Render(http.StatusInternalServerError, "error", response)
+	})
 	e.Logger.Fatal(e.Start(PORT))
 }
