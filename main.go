@@ -2,17 +2,12 @@ package main
 
 import (
 	"database/sql"
-	"encoding/csv"
-	"fmt"
 	"html/template"
 	"io"
 	"net/http"
-	"os"
-	"strconv"
 
 	"github.com/labstack/echo/v4"
 	_ "github.com/mattn/go-sqlite3"
-	tflite "github.com/mattn/go-tflite"
 )
 
 const PORT = ":8080"
@@ -70,7 +65,7 @@ func main() {
 	} */
 
 	e.GET("/", func(c echo.Context) error {
-		modelPath := "entrega-2/modelo_apertura.tflite"
+		/* modelPath := "entrega-2/modelo_apertura.tflite"
 		csvPath := "entrega-2/corr_bitcoin_diario_apertura.csv"
 		e.Logger.Printf("modelo: %v\ncsv: %v", modelPath, csvPath)
 		predictions, err := PredictFromCSV(modelPath, csvPath)
@@ -88,7 +83,7 @@ func main() {
 		for i, pred := range predictions {
 			fmt.Printf("Fila %d: %v\n", i+1, pred)
 		}
-
+		*/
 		e.Logger.Printf("GET request for /")
 		response := map[string]any{
 			"URL":          URL,
@@ -109,6 +104,7 @@ func main() {
 	e.Logger.Fatal(e.Start(PORT))
 }
 
+/*
 // PredictFromCSV carga un modelo TFLite y realiza predicciones sobre datos de un CSV
 func PredictFromCSV(modelPath string, csvPath string) ([][]float32, error) {
 	// 1. Cargar el modelo TensorFlow Lite
@@ -193,4 +189,4 @@ func PredictFromCSV(modelPath string, csvPath string) ([][]float32, error) {
 	}
 
 	return predictions, nil
-}
+} */
