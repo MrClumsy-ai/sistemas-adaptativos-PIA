@@ -3,13 +3,12 @@ import joblib
 import seaborn as sns
 import matplotlib.pyplot as plt
 import pandas as pd
-# import scipy.stats as stats
 import numpy as np
 from sklearn.metrics import mean_squared_error
 from sklearn.preprocessing import MinMaxScaler
 from keras.layers import Dense, GRU
+from keras.models import save_model
 from keras import Sequential
-# from tensorflow import keras
 import tensorflow as tf
 import logging
 logging.getLogger("tensorflow").setLevel(logging.ERROR)
@@ -30,13 +29,13 @@ def generar_ventanas(datos_preproc, ventana):
     return X, y
 
 
-data_file = pd.read_csv('corr_bitcoin_diario_clausura.csv')
+data_file = pd.read_csv('corr_bitcoin_diario_apertura.csv')
 data_file.head()
-data_file_clausura = data_file['clausura']
-data_file_clausura.head()
+data_file_apertura = data_file['apertura']
+data_file_apertura.head()
 
 # Conversión a array de numpy
-datos = data_file_clausura.to_numpy().reshape(-1, 1)
+datos = data_file_apertura.to_numpy().reshape(-1, 1)
 print("Dimensiones del conjunto de datos: ", datos.shape)
 
 # Estandarización min-max
@@ -118,10 +117,11 @@ def run(modelos, nombres_modelos, X_train, X_test, y_train, y_test, scaler):
     Y_train_pred_inverse.append(y_train_pred_inverse)
     Y_test_pred_inverse.append(y_test_pred_inverse)
 
-    # GUARDAR MEJOR MODELO
-    mejor_modelo.save("mejor_modelo_clausura.h5")
-    # GUARDAR EL SCALER
-    joblib.dump(scaler, "scaler_clausura.save")
+    # Ejercicio 5
+    # # GUARDAR MEJOR MODELO
+    # mejor_modelo.save("mejor_modelo_apertura.h5")
+    # # GUARDAR EL SCALER
+    # joblib.dump(scaler, "scaler_apertura.save")
     return [Y_train_pred_inverse, Y_test_pred_inverse, errores]
 
 
@@ -144,7 +144,7 @@ plt.figure(figsize=(10, 4))
 plt.title("Precio del Bitcoin 2014-2022 (apertura)", fontsize=16)
 plt.xlabel("Tiempo (unidades)", fontsize=14)
 plt.ylabel("Precio (USD)", fontsize=14)
-plt.plot(data_file_clausura)
+plt.plot(data_file_apertura)
 
 # Graficar split de los datos
 plt.figure(figsize=(10, 4))
