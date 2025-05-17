@@ -70,6 +70,7 @@ func main() {
 	} */
 
 	e.GET("/", func(c echo.Context) error {
+		e.Logger.Printf("GET request for /")
 		modelPath := "entrega-2/modelo_apertura.tflite"
 		csvPath := "entrega-2/corr_bitcoin_diario_apertura.csv"
 		e.Logger.Printf("modelo: %v\ncsv: %v", modelPath, csvPath)
@@ -88,8 +89,6 @@ func main() {
 		for i, pred := range predictions {
 			fmt.Printf("Fila %d: %v\n", i+1, pred)
 		}
-
-		e.Logger.Printf("GET request for /")
 		response := map[string]any{
 			"URL":          URL,
 			"CurrentRoute": "/",
