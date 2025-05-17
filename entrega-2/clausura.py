@@ -112,6 +112,8 @@ def run(modelos, nombres_modelos, X_train, X_test, y_train, y_test, scaler):
     # Se vuelven a calcular con el mejor modelo (también se pueden guardar)
     y_train_pred = mejor_modelo.predict(X_train, verbose=1)
     y_test_pred = mejor_modelo.predict(X_test, verbose=1)
+    # GUARDAR MEJOR MODELO
+    mejor_modelo.save("mejor_modelo_clausura.h5")
     y_train_pred_inverse = scaler.inverse_transform(y_train_pred)
     y_test_pred_inverse = scaler.inverse_transform(y_test_pred)
     Y_train_pred_inverse.append(y_train_pred_inverse)
