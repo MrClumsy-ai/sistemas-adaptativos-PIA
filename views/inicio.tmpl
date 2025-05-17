@@ -5,26 +5,160 @@
     <title>Prediccion Bitcoin</title>
     {{ template "librerias" .}}
     {{ template "meta" .}}
-    <style>
-      .main-chart {
-        width: 90%;
-        height: 500px;
-        margin: 20px auto;
-        position: relative;
-      } </style>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-chart-financial"></script>
+    <script src="https://cdn.jsdelivr.net/npm/date-fns@2.x/dist/date-fns.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns@3.x"></script>
   </head>
   <body >
     <div class="container">
       <header class="main-header">Pascal</header>
       <h2 class="subtitle">Dashboard Bitcoin</h2>
       <main class="dashboard">
-        <section class="main-chart">📈 Aquí va la gráfica principal</section>
+        <section class="main-chart">
+        <canvas id="miGraficoVelas"></canvas>
+          <script>
+            // Datos de ejemplo para Bitcoin
+            const datosBTC = [
+              {t: new Date('2024-01-01').getTime(), o: 42000, h: 43800, l: 41500, c: 43200},
+              {t: new Date('2024-01-02').getTime(), o: 43200, h: 44500, l: 42800, c: 44000},
+              {t: new Date('2024-01-03').getTime(), o: 44000, h: 45200, l: 43500, c: 43500},
+              {t: new Date('2024-01-04').getTime(), o: 43500, h: 44200, l: 42800, c: 43800},
+              {t: new Date('2024-01-05').getTime(), o: 43800, h: 44800, l: 43200, c: 44500},
+            ];
+
+            // Configuración del gráfico
+            const config = {
+              type: 'candlestick',
+              data: {
+                datasets: [{
+                  label: 'Precio BTC/USD',
+                  data: datosBTC,
+                  color: {
+                    up: '#4CAF50',
+                    down: '#FF5252',
+                    unchanged: '#2196F3'
+                  },
+                  borderColor: '#000',
+                }]
+              },
+              options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                  x: {
+                    type: 'time',
+                    time: {
+                      unit: 'day',
+                      displayFormats: { day: 'dd MMM' }
+                    },
+                    ticks: { color: '#333' }
+                  },
+                  y: {
+                    ticks: { 
+                      color: '#333',
+                      callback: (value) => '$' + value.toLocaleString()
+                    }
+                  }
+                },
+                plugins: {
+                  legend: { display: false },
+                  tooltip: {
+                    callbacks: {
+                      label: (ctx) => {
+                        const item = ctx.raw;
+                        return [
+                          `Apertura: $${item.o}`,
+                          `Máximo: $${item.h}`,
+                          `Mínimo: $${item.l}`,
+                          `Cierre: $${item.c}`
+                        ];
+                      }
+                    }
+                  }
+                }
+              }
+            };
+
+            // Inicializar el gráfico
+            const ctx = document.getElementById('miGraficoVelas').getContext('2d');
+            new Chart(ctx, config);
+          </script>
+        </section>
         <aside class="side-panel">
-          <div class="box box-top">📋 Datos de Apertura</div>
-          <div class="box box-bottom">Datos de Clausura</div>
+          <div class="box box-top">
+          <h3>📋 Datos en Tiempo Real</h3>
+            <table class="data-table" id="topTable">
+              <thead>
+                <tr>
+                  <th>Hora</th>
+                  <th>Par</th>
+                  <th>Valor</th>
+                </tr>
+              </thead>
+              <tbody id="topTableBody">
+                <!-- Datos dinámicos irán aquí -->
+                <tr class="loading">
+                  <td colspan="3">Cargando datos...</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="box box-bottom">
+           <h3>📊 Histórico Reciente</h3>
+            <table class="data-table" id="bottomTable">
+              <thead>
+                <tr>
+                  <th>Fecha</th>
+                  <th>Apertura</th>
+                  <th>Cierre</th>
+                </tr>
+              </thead>
+              <tbody id="bottomTableBody">
+                <!-- Datos dinámicos irán aquí -->
+                <tr class="loading">
+                  <td colspan="3">Cargando datos...</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </aside>
       </main>
     </div>
   </body>
 </html>
 {{ end }}
+
+// <script>
+      // Sistema de actualización
+      function actualizarTablas() {
+        // Lógica para actualizar topTableBody
+        // fetch().then().then(data => { ... })
+        
+        // Ejemplo básico de actualización
+        const ahora = new Date().toLocaleTimeString();
+        
+        // Top Table (Ejemplo estático)
+        document.getElementById('topTableBody').innerHTML = `
+          <tr>
+            <td>${ahora}</td>
+            <td>BTC/USD</td>
+            <td>${(Math.random() * 1000).toFixed(2)}</td>
+          </tr>
+        ` + document.getElementById('topTableBody').innerHTML;
+        
+        // Bottom Table (Ejemplo estático)
+        document.getElementById('bottomTableBody').innerHTML = `
+          <tr>
+            <td>${new Date().toLocaleDateString()}</td>
+            <td>${(Math.random() * 1000).toFixed(2)}</td>
+            <td>${(Math.random() * 1000).toFixed(2)}</td>
+          </tr>
+        ` + document.getElementById('bottomTableBody').innerHTML;
+      }
+
+      // Actualizar cada 5 segundos (5000 ms)
+      setInterval(actualizarTablas, 5000);
+      // Ejecutar primera vez
+      actualizarTablas();
+    </script>
