@@ -118,10 +118,10 @@ def run(modelos, nombres_modelos, X_train, X_test, y_train, y_test, scaler):
     Y_test_pred_inverse.append(y_test_pred_inverse)
 
     # Ejercicio 5
-    # # GUARDAR MEJOR MODELO
-    # mejor_modelo.save("mejor_modelo_apertura.h5")
-    # # GUARDAR EL SCALER
-    # joblib.dump(scaler, "scaler_apertura.save")
+    # GUARDAR MEJOR MODELO
+    mejor_modelo.save("mejor_modelo_apertura.h5")
+    # GUARDAR EL SCALER
+    joblib.dump(scaler, "scaler_apertura.save")
     return [Y_train_pred_inverse, Y_test_pred_inverse, errores]
 
 
