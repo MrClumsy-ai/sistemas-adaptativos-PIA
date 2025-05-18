@@ -3,6 +3,7 @@ package main
 import (
 	"encoding/json"
 	"errors"
+	"fmt"
 	"html/template"
 	"io"
 	"net/http"
@@ -53,23 +54,19 @@ func newTemplate() *Templates {
 var pythonProcess *exec.Cmd
 
 func startPythonAPI() error {
-	// Comando para iniciar el servidor Flask
 	pythonProcess = exec.Command("py", "-3.12", "api.py")
 	pythonProcess.Stdout = os.Stdout
 	pythonProcess.Stderr = os.Stderr
-	// Iniciar el proceso en segundo plano
 	err := pythonProcess.Start()
 	if err != nil {
 		return err
 	}
-	// Esperar un momento para que el servidor Flask se inicie
 	time.Sleep(2 * time.Second)
 	return nil
 }
 
 func stopPythonAPI() error {
 	if pythonProcess != nil && pythonProcess.Process != nil {
-		// Enviar señal SIGTERM para cerrar el proceso
 		err := pythonProcess.Process.Signal(syscall.SIGTERM)
 		if err != nil {
 			return err
@@ -90,38 +87,35 @@ func main() {
 	defer stopPythonAPI()
 
 	e.GET("/", func(c echo.Context) error {
-		e.Logger.Printf("(go): GET /")
-		e.Logger.Printf("(py): GET /predict")
+		fmt.Println("(go): GET /")
 		respApertura, err := http.Get("http://localhost:5000/predict_last_apertura")
 		if err != nil {
 			response := map[string]any{
 				"URL":     URL,
 				"Code":    http.StatusInternalServerError,
-				"Message": "error getting python thingy",
+				"Message": "py api: /predict_last_apertura no disponible. Esperar a que se inicie el servidor",
 			}
 			e.Logger.Error(response["Message"], err)
 			return c.Render(http.StatusInternalServerError, "error", response)
 		}
 		defer respApertura.Body.Close()
-		e.Logger.Printf("response: %v", respApertura)
 		bodyApertura, err := io.ReadAll(respApertura.Body)
 		if err != nil {
 			response := map[string]any{
 				"URL":     URL,
 				"Code":    http.StatusInternalServerError,
-				"Message": "error getting response body",
+				"Message": "Error getting apertura body",
 			}
 			e.Logger.Error(response["Message"], err)
 			return c.Render(http.StatusInternalServerError, "error", response)
 		}
-		e.Logger.Printf("body: %v", bodyApertura)
 		var predictionApertura Prediction
 		err = json.Unmarshal(bodyApertura, &predictionApertura)
 		if err != nil {
 			response := map[string]any{
 				"URL":     URL,
 				"Code":    http.StatusInternalServerError,
-				"Message": "body no pudo ser procesada",
+				"Message": "Apertura body no pudo ser procesada",
 			}
 			e.Logger.Error(response["Message"], err)
 			return c.Render(http.StatusInternalServerError, "error", response)
@@ -131,31 +125,29 @@ func main() {
 			response := map[string]any{
 				"URL":     URL,
 				"Code":    http.StatusInternalServerError,
-				"Message": "error getting python thingy",
+				"Message": "py api: /predict_last_apertura no disponible. Esperar a que se inicie el servidor",
 			}
 			e.Logger.Error(response["Message"], err)
 			return c.Render(http.StatusInternalServerError, "error", response)
 		}
 		defer respClausura.Body.Close()
-		e.Logger.Printf("response: %v", respClausura)
 		bodyClausura, err := io.ReadAll(respClausura.Body)
 		if err != nil {
 			response := map[string]any{
 				"URL":     URL,
 				"Code":    http.StatusInternalServerError,
-				"Message": "error getting response body",
+				"Message": "Error getting clausura body",
 			}
 			e.Logger.Error(response["Message"], err)
 			return c.Render(http.StatusInternalServerError, "error", response)
 		}
-		e.Logger.Printf("body: %v", bodyClausura)
 		var predictionClausura Prediction
 		err = json.Unmarshal(bodyClausura, &predictionClausura)
 		if err != nil {
 			response := map[string]any{
 				"URL":     URL,
 				"Code":    http.StatusInternalServerError,
-				"Message": "body no pudo ser procesada",
+				"Message": "Apertura body no pudo ser procesada",
 			}
 			e.Logger.Error(response["Message"], err)
 			return c.Render(http.StatusInternalServerError, "error", response)
@@ -169,7 +161,7 @@ func main() {
 			"CurrentRoute": "/",
 			"Predictions":  predictions,
 		}
-		e.Logger.Printf("%v: %v", http.StatusOK, response)
+		e.Logger.Printf("http %v: %v", http.StatusOK, response)
 		return c.Render(http.StatusOK, "inicio", response)
 	})
 

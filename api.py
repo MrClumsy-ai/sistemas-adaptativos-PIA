@@ -99,6 +99,7 @@ def predict_last_apertura():
     """
     Endpoint para predecir el próximo valor basado en los últimos datos del CSV
     """
+    print("(py): GET /predict_last_apertura")
     try:
         # Cargar datos históricos
         data_file = pd.read_csv('./database/corr_bitcoin_diario_apertura.csv')
@@ -125,6 +126,7 @@ def predict_last_clausura():
     """
     Endpoint para predecir el próximo valor basado en los últimos datos del CSV
     """
+    print("(py): GET /predict_last_clausura")
     try:
         # Cargar datos históricos
         data_file = pd.read_csv('./database/corr_bitcoin_diario_clausura.csv')
