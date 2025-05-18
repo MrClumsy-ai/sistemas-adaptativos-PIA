@@ -1,6 +1,6 @@
 # TODO
 
-- [ ] hacer esqueletos con .tmpl
+- [ ] Modificar inicio para usar datos reales
 
 ## Para iniciar el servidor:
 
@@ -18,7 +18,15 @@ go mod tidy
 go run main.go
 ```
 
-4. Ir a la ubicacion desde un navegador web: http://localhost:8080/
+4. Esperar a que en la terminal salga algo como:
+```
+WARNING:absl:Compiled the loaded model, but the compiled metrics have yet to be built. `model.compile_metrics` will be empty until you train or evaluate the model.
+WARNING:absl:Compiled the loaded model, but the compiled metrics have yet to be built. `model.compile_metrics` will be empty until you train or evaluate the model.
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 256-911-240
+```
+5. Ir a la ubicacion desde un navegador web: http://localhost:8080/
+6. Una vez que hicieron cambios, para verlos en accion, regresar a la terminal y presionar <kbd>Ctrl</kbd> + <kbd>C</kbd> y regresar al paso #3
 
 ## Para trabajar
 

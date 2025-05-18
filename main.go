@@ -19,8 +19,9 @@ const URL = "http://localhost" + PORT
 
 /*
 uso en front-end:
-usar {{ .Body.[nombre de la propiedad] }}
-ejemplo: {{ .Body.LastDate }}
+{{ .Predictions.Apertura.LastDate }}
+{{ .Predictions.Apertura.LastValues }}
+{{ .Predictions.Apertura.NextPrediction }}
 */
 type Prediction struct {
 	LastDate       string    `json:"last_date"`
