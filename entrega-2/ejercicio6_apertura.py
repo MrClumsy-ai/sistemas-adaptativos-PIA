@@ -1,10 +1,7 @@
-from sklearn.metrics import mean_squared_error
 import pandas as pd
 import numpy as np
 from keras.models import load_model
-from sklearn.preprocessing import MinMaxScaler
 import joblib
-import matplotlib.pyplot as plt
 
 # 1. Cargar los datos originales
 data_file = pd.read_csv('corr_bitcoin_diario_apertura.csv')
@@ -15,16 +12,12 @@ datos = data_file_apertura.to_numpy().reshape(-1, 1)
 scaler = joblib.load('scaler_apertura.save')
 
 # 3. Cargar el modelo
-# Usa el nombre que guardaste
 modelo_cargado = load_model('mejor_modelo_apertura.h5')
 
-# 4. Preprocesamiento (debe ser IDÉNTICO al que
-# usaste durante el entrenamiento)
-datos_estandarizados = scaler.transform(
-    datos)  # Usa transform() no fit_transform()
+# 4. Preprocesamiento
+datos_estandarizados = scaler.transform(datos)
 
-# 5. Recrear las ventanas temporales (mismo tamaño
-# que durante el entrenamiento)
+# 5. Recrear las ventanas temporales
 ventana = 8  # Debe ser el mismo valor usado originalmente
 
 
@@ -45,18 +38,3 @@ y_pred = modelo_cargado.predict(X)
 # 7. Invertir la normalización
 y_pred_inverse = scaler.inverse_transform(y_pred)
 y_real_inverse = scaler.inverse_transform(y.reshape(-1, 1))
-
-# 8. Visualización
-plt.figure(figsize=(12, 6))
-plt.plot(y_real_inverse, label='Precio Real', color='blue', alpha=0.6)
-plt.plot(y_pred_inverse, label='Predicciones', color='red', alpha=0.6)
-plt.title('Comparación: Precio Real vs Predicciones del Modelo Cargado')
-plt.xlabel('Tiempo')
-plt.ylabel('Precio (USD)')
-plt.legend()
-plt.grid(True)
-plt.show()
-
-# 9. Calcular métricas de error (opcional)
-rmse = np.sqrt(mean_squared_error(y_real_inverse, y_pred_inverse))
-print(f'RMSE usando el modelo cargado: {rmse:.2f}')
