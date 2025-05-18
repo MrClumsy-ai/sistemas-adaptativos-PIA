@@ -1,6 +1,7 @@
 package main
 
 import (
+	"encoding/json"
 	"errors"
 	"html/template"
 	"io"
@@ -15,6 +16,12 @@ import (
 
 const PORT = ":8080"
 const URL = "http://localhost" + PORT
+
+type Prediction struct {
+	LastDate       string    `json:"last_date"`
+	LastValues     []float32 `json:"last_values"`
+	NextPrediction float32   `json:"next_prediction"`
+}
 
 type Templates struct {
 	templates *template.Template
@@ -97,11 +104,23 @@ func main() {
 			return c.Render(http.StatusInternalServerError, "error", response)
 		}
 		e.Logger.Printf("body: %v", body)
+		var prediction Prediction
+		err = json.Unmarshal(body, &prediction)
+		if err != nil {
+			response := map[string]any{
+				"URL":     URL,
+				"Code":    http.StatusInternalServerError,
+				"Message": "body no pudo ser procesada",
+			}
+			e.Logger.Error(response["Message"], err)
+			return c.Render(http.StatusInternalServerError, "error", response)
+		}
 		response := map[string]any{
 			"URL":          URL,
 			"CurrentRoute": "/",
-			"Body":         body,
+			"Body":         prediction,
 		}
+		e.Logger.Printf("%v: %v", http.StatusOK, response)
 		return c.Render(http.StatusOK, "inicio", response)
 	})
 
