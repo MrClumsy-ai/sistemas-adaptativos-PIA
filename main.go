@@ -28,6 +28,11 @@ type Prediction struct {
 	NextPrediction float32   `json:"next_prediction"`
 }
 
+type Predictions struct {
+	Apertura Prediction
+	Clausura Prediction
+}
+
 type Templates struct {
 	templates *template.Template
 }
@@ -86,7 +91,7 @@ func main() {
 	e.GET("/", func(c echo.Context) error {
 		e.Logger.Printf("(go): GET /")
 		e.Logger.Printf("(py): GET /predict")
-		resp, err := http.Get("http://localhost:5000/predict_last")
+		respApertura, err := http.Get("http://localhost:5000/predict_last_apertura")
 		if err != nil {
 			response := map[string]any{
 				"URL":     URL,
@@ -96,9 +101,9 @@ func main() {
 			e.Logger.Error(response["Message"], err)
 			return c.Render(http.StatusInternalServerError, "error", response)
 		}
-		defer resp.Body.Close()
-		e.Logger.Printf("response: %v", resp)
-		body, err := io.ReadAll(resp.Body)
+		defer respApertura.Body.Close()
+		e.Logger.Printf("response: %v", respApertura)
+		bodyApertura, err := io.ReadAll(respApertura.Body)
 		if err != nil {
 			response := map[string]any{
 				"URL":     URL,
@@ -108,9 +113,9 @@ func main() {
 			e.Logger.Error(response["Message"], err)
 			return c.Render(http.StatusInternalServerError, "error", response)
 		}
-		e.Logger.Printf("body: %v", body)
-		var prediction Prediction
-		err = json.Unmarshal(body, &prediction)
+		e.Logger.Printf("body: %v", bodyApertura)
+		var predictionApertura Prediction
+		err = json.Unmarshal(bodyApertura, &predictionApertura)
 		if err != nil {
 			response := map[string]any{
 				"URL":     URL,
@@ -120,10 +125,48 @@ func main() {
 			e.Logger.Error(response["Message"], err)
 			return c.Render(http.StatusInternalServerError, "error", response)
 		}
+		respClausura, err := http.Get("http://localhost:5000/predict_last_clausura")
+		if err != nil {
+			response := map[string]any{
+				"URL":     URL,
+				"Code":    http.StatusInternalServerError,
+				"Message": "error getting python thingy",
+			}
+			e.Logger.Error(response["Message"], err)
+			return c.Render(http.StatusInternalServerError, "error", response)
+		}
+		defer respClausura.Body.Close()
+		e.Logger.Printf("response: %v", respClausura)
+		bodyClausura, err := io.ReadAll(respClausura.Body)
+		if err != nil {
+			response := map[string]any{
+				"URL":     URL,
+				"Code":    http.StatusInternalServerError,
+				"Message": "error getting response body",
+			}
+			e.Logger.Error(response["Message"], err)
+			return c.Render(http.StatusInternalServerError, "error", response)
+		}
+		e.Logger.Printf("body: %v", bodyClausura)
+		var predictionClausura Prediction
+		err = json.Unmarshal(bodyClausura, &predictionClausura)
+		if err != nil {
+			response := map[string]any{
+				"URL":     URL,
+				"Code":    http.StatusInternalServerError,
+				"Message": "body no pudo ser procesada",
+			}
+			e.Logger.Error(response["Message"], err)
+			return c.Render(http.StatusInternalServerError, "error", response)
+		}
+		predictions := Predictions{
+			Apertura: predictionApertura,
+			Clausura: predictionClausura,
+		}
 		response := map[string]any{
 			"URL":          URL,
 			"CurrentRoute": "/",
-			"Body":         prediction,
+			"Predictions":  predictions,
 		}
 		e.Logger.Printf("%v: %v", http.StatusOK, response)
 		return c.Render(http.StatusOK, "inicio", response)
