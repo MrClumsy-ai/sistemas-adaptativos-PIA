@@ -7,7 +7,6 @@ import numpy as np
 from sklearn.metrics import mean_squared_error
 from sklearn.preprocessing import MinMaxScaler
 from keras.layers import Dense, GRU
-from keras.models import save_model
 from keras import Sequential
 import tensorflow as tf
 import logging
@@ -117,11 +116,11 @@ def run(modelos, nombres_modelos, X_train, X_test, y_train, y_test, scaler):
     Y_train_pred_inverse.append(y_train_pred_inverse)
     Y_test_pred_inverse.append(y_test_pred_inverse)
 
-    # Ejercicio 5
-    # GUARDAR MEJOR MODELO
-    mejor_modelo.save("mejor_modelo_apertura.h5")
-    # GUARDAR EL SCALER
-    joblib.dump(scaler, "scaler_apertura.save")
+    # !!! Ejercicio 5
+    # Guarda el modelo en formato HDF5
+    mejor_modelo.save('mejor_modelo_apertura.h5')
+    # Guarda el scaler para poder preprocesar nuevos datos
+    joblib.dump(scaler, 'scaler_apertura.save')
     return [Y_train_pred_inverse, Y_test_pred_inverse, errores]
 
 
