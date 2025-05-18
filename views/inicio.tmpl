@@ -5,10 +5,6 @@
     <title>Prediccion Bitcoin</title>
     {{ template "librerias" .}}
     {{ template "meta" .}}
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chartjs-chart-financial"></script>
-    <script src="https://cdn.jsdelivr.net/npm/date-fns@2.x/dist/date-fns.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns@3.x"></script>
   </head>
   <body >
     <div class="container">
@@ -129,7 +125,7 @@
 </html>
 {{ end }}
 
-// <script>
+<script>
       // Sistema de actualización
       function actualizarTablas() {
         // Lógica para actualizar topTableBody
@@ -161,4 +157,4 @@
       setInterval(actualizarTablas, 5000);
       // Ejecutar primera vez
       actualizarTablas();
-    </script>
+</script>
