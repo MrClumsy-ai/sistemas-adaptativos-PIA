@@ -17,6 +17,11 @@ import (
 const PORT = ":8080"
 const URL = "http://localhost" + PORT
 
+/*
+uso en front-end:
+usar {{ .Body.[nombre de la propiedad] }}
+ejemplo: {{ .Body.LastDate }}
+*/
 type Prediction struct {
 	LastDate       string    `json:"last_date"`
 	LastValues     []float32 `json:"last_values"`
