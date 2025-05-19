@@ -90,66 +90,66 @@ func main() {
 		fmt.Println("(go): GET /")
 		respApertura, err := http.Get("http://localhost:5000/predict_last_apertura")
 		if err != nil {
+			e.Logger.Error(err)
 			response := map[string]any{
 				"URL":     URL,
 				"Code":    http.StatusInternalServerError,
 				"Message": "py api: /predict_last_apertura no disponible. Esperar a que se inicie el servidor",
 			}
-			e.Logger.Error(response["Message"], err)
 			return c.Render(http.StatusInternalServerError, "error", response)
 		}
 		defer respApertura.Body.Close()
 		bodyApertura, err := io.ReadAll(respApertura.Body)
 		if err != nil {
+			e.Logger.Error(err)
 			response := map[string]any{
 				"URL":     URL,
 				"Code":    http.StatusInternalServerError,
 				"Message": "Error getting apertura body",
 			}
-			e.Logger.Error(response["Message"], err)
 			return c.Render(http.StatusInternalServerError, "error", response)
 		}
 		var predictionApertura Prediction
 		err = json.Unmarshal(bodyApertura, &predictionApertura)
 		if err != nil {
+			e.Logger.Error(err)
 			response := map[string]any{
 				"URL":     URL,
 				"Code":    http.StatusInternalServerError,
 				"Message": "Apertura body no pudo ser procesada",
 			}
-			e.Logger.Error(response["Message"], err)
 			return c.Render(http.StatusInternalServerError, "error", response)
 		}
 		respClausura, err := http.Get("http://localhost:5000/predict_last_clausura")
 		if err != nil {
+			e.Logger.Error(err)
 			response := map[string]any{
 				"URL":     URL,
 				"Code":    http.StatusInternalServerError,
 				"Message": "py api: /predict_last_apertura no disponible. Esperar a que se inicie el servidor",
 			}
-			e.Logger.Error(response["Message"], err)
 			return c.Render(http.StatusInternalServerError, "error", response)
 		}
 		defer respClausura.Body.Close()
 		bodyClausura, err := io.ReadAll(respClausura.Body)
 		if err != nil {
+			e.Logger.Error(err)
 			response := map[string]any{
 				"URL":     URL,
 				"Code":    http.StatusInternalServerError,
 				"Message": "Error getting clausura body",
 			}
-			e.Logger.Error(response["Message"], err)
 			return c.Render(http.StatusInternalServerError, "error", response)
 		}
 		var predictionClausura Prediction
 		err = json.Unmarshal(bodyClausura, &predictionClausura)
 		if err != nil {
+			e.Logger.Error(err)
 			response := map[string]any{
 				"URL":     URL,
 				"Code":    http.StatusInternalServerError,
 				"Message": "Apertura body no pudo ser procesada",
 			}
-			e.Logger.Error(response["Message"], err)
 			return c.Render(http.StatusInternalServerError, "error", response)
 		}
 		predictions := Predictions{
