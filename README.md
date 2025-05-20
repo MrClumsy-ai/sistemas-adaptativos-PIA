@@ -1,6 +1,6 @@
 # TODO
 
-- [ ] Modificar inicio para usar datos reales
+- [ ] Front-end: usar datos proporcionados por la API (ver documentacion en main.go)
 
 ## Para iniciar el servidor:
 
