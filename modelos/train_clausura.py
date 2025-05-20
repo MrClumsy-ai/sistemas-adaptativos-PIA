@@ -1,7 +1,6 @@
 import sys
 import joblib
 import seaborn as sns
-import matplotlib.pyplot as plt
 import pandas as pd
 import numpy as np
 from sklearn.metrics import mean_squared_error
@@ -28,13 +27,13 @@ def generar_ventanas(datos_preproc, ventana):
     return X, y
 
 
-data_file = pd.read_csv("corr_bitcoin_diario_apertura.csv")
+data_file = pd.read_csv("../database/bitcoin_cierre_2013_actual.csv")
 data_file.head()
-data_file_apertura = data_file["apertura"]
-data_file_apertura.head()
+data_file_clausura = data_file["cierre"]
+data_file_clausura.head()
 
 # Conversión a array de numpy
-datos = data_file_apertura.to_numpy().reshape(-1, 1)
+datos = data_file_clausura.to_numpy().reshape(-1, 1)
 print("Dimensiones del conjunto de datos: ", datos.shape)
 
 # Estandarización min-max
@@ -117,10 +116,11 @@ def run(modelos, nombres_modelos, X_train, X_test, y_train, y_test, scaler):
     Y_test_pred_inverse.append(y_test_pred_inverse)
 
     # !!! Ejercicio 5
+    # GUARDAR MEJOR MODELO
     # Guarda el modelo en formato HDF5
-    mejor_modelo.save("mejor_modelo_apertura.h5")
+    mejor_modelo.save("mejor_modelo_clausura.h5")
     # Guarda el scaler para poder preprocesar nuevos datos
-    joblib.dump(scaler, "scaler_apertura.save")
+    joblib.dump(scaler, "scaler_clausura.save")
     return [Y_train_pred_inverse, Y_test_pred_inverse, errores]
 
 
@@ -136,51 +136,3 @@ datos_errores[nombres_modelos[0]] = errores
 df_errores = pd.DataFrame(datos_errores)
 df_errores
 print(errores)
-
-# Graficar precios de clausura
-sns.set()
-plt.figure(figsize=(10, 4))
-plt.title("Precio del Bitcoin 2014-2022 (apertura)", fontsize=16)
-plt.xlabel("Tiempo (unidades)", fontsize=14)
-plt.ylabel("Precio (USD)", fontsize=14)
-plt.plot(data_file_apertura)
-
-# Graficar split de los datos
-plt.figure(figsize=(10, 4))
-plt.title("Entrenamiento vs. prueba (estandarizado)", fontsize=16)
-plt.xlabel("Tiempo (unidades)", fontsize=14)
-plt.ylabel("Precio (USD)", fontsize=14)
-
-plt.plot(np.arange(tam_entrenamiento),
-         datos_estandarizados[:tam_entrenamiento],
-         label="Conjunto de entrenamiento", color="black")
-plt.plot(np.arange(tam_entrenamiento, n),
-         datos_estandarizados[tam_entrenamiento:n],
-         label="Conjunto de prueba", color="red")
-
-# Ver entrenamiento y prueba con una gráfica múltiple
-fig, axs = plt.subplots(1, 2, figsize=(15, 5))
-for i in range(len(modelos)):
-    axs[0].plot(np.arange(tam_entrenamiento), datos[:tam_entrenamiento],
-                label="Datos originales", color="blue")
-    axs[0].plot(np.arange(tam_entrenamiento), Y_train_pred_inverse[i],
-                label="Predicciones (entrenamiento)", color="green")
-    axs[0].set_title(nombres_modelos[i])
-    axs[0].legend(loc="upper left")
-
-for i in range(len(modelos)):
-    axs[1].plot(np.arange(tam_prueba), datos[tam_entrenamiento:m],
-                label="Datos originales", color="blue")
-    axs[1].plot(np.arange(tam_prueba), Y_test_pred_inverse[i],
-                label="Prueba (pred.)", color="red")
-    axs[1].set_title(nombres_modelos[i])
-    axs[1].legend(loc="upper right")
-
-plt.tight_layout()
-plt.show()
-
-cant_modelos = 1
-plt.yscale("log")
-plt.ylabel("MSE (escala logarítmica)")
-sns.boxplot(errores, palette="viridis")
-# plt.xticks(ticks=np.arange(0,cant_modelos),labels=nombres_modelos[0])
