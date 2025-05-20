@@ -25,7 +25,7 @@ def get_yahoo_data():
         btc["fecha_apertura"] = btc["Date"].dt.strftime("%d/%m/%Y 00:00")
         btc["fecha_cierre"] = btc["Date"].dt.strftime("%d/%m/%Y 23:59")
         if isinstance(btc.columns, pd.MultiIndex):
-            btc.columns = ['_'.join(col).strip() if col[1] else col[0]
+            btc.columns = ["_".join(col).strip() if col[1] else col[0]
                            for col in btc.columns.values]
         return btc[["fecha_apertura", "Open_BTC-USD",
                     "fecha_cierre", "Close_BTC-USD"]].rename(
@@ -48,9 +48,9 @@ def get_binance_data():
         response.raise_for_status()
         data = response.json()
         df = pd.DataFrame(data, columns=[
-            'timestamp', 'open', 'high', 'low', 'close', 'volume',
-            'close_time', 'quote_volume', 'count', 'taker_buy_volume',
-            'taker_buy_quote_volume', 'ignore'
+            "timestamp", "open", "high", "low", "close", "volume",
+            "close_time", "quote_volume", "count", "taker_buy_volume",
+            "taker_buy_quote_volume", "ignore"
         ])
         df["timestamp"] = pd.to_datetime(df["timestamp"], unit="ms")
         df["fecha_apertura"] = df["timestamp"].dt.strftime("%d/%m/%Y 00:00")
@@ -72,7 +72,7 @@ def process_data():
         raise ValueError("No se pudieron obtener todos los datos necesarios")
     df_full = pd.concat([df_yahoo, df_binance], ignore_index=True)
     print("\nColumnas finales en df_full:", df_full.columns.tolist())
-    df_full = df_full.dropna(axis=1, how='all')
+    df_full = df_full.dropna(axis=1, how="all")
     df_full["fecha_datetime"] = pd.to_datetime(
         df_full["fecha_apertura"], dayfirst=True
     )
