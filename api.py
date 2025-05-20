@@ -130,15 +130,15 @@ def predict_last_clausura():
     try:
         # Cargar datos históricos
         data_file = pd.read_csv('./database/bitcoin_cierre_2013_actual.csv')
-        datos = data_file['clausura'].to_numpy().reshape(-1, 1)
+        datos = data_file['cierre'].to_numpy().reshape(-1, 1)
         # Tomar los últimos 'ventana' valores
         last_window = datos[-ventana:]
-        last_window_scaled = scaler_clausura.transform(last_window)
+        last_window_scaled = scaler_apertura.transform(last_window)
         # Preparar para predicción
         X = last_window_scaled.T.reshape(1, ventana, 1)
         # Hacer predicción
-        y_pred = model_clausura.predict(X)
-        y_pred_inverse = scaler_clausura.inverse_transform(y_pred)
+        y_pred = model_apertura.predict(X)
+        y_pred_inverse = scaler_apertura.inverse_transform(y_pred)
         return jsonify({
             "last_date": data_file['fecha'].iloc[-1],
             "next_prediction": float(y_pred_inverse[0][0]),
