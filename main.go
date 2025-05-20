@@ -19,11 +19,22 @@ const PORT = ":8080"
 const URL = "http://localhost" + PORT
 
 /*
-uso en front-end:
+uso en front-end con go:
 {{ .Predictions.Apertura.LastDate }}
 {{ .Predictions.Apertura.LastValues }}
 {{ .Predictions.Apertura.NextPrediction }}
+
+(api.py)
+si se quiere conseguir los JSON directamente, usar la url para el get:
+http://localhost:5000/
+
+para las predicciones de apertura, usar la ruta:
+/predict_last_apertura
+
+para las predicciones de clausura, usar la ruta:
+/predict_last_clausura
 */
+
 type Prediction struct {
 	LastDate       string    `json:"last_date"`
 	LastValues     []float32 `json:"last_values"`
@@ -161,7 +172,6 @@ func main() {
 			"CurrentRoute": "/",
 			"Predictions":  predictions,
 		}
-		e.Logger.Printf("http %v: %v", http.StatusOK, response)
 		return c.Render(http.StatusOK, "inicio", response)
 	})
 
