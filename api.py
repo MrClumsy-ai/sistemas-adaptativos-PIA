@@ -102,7 +102,7 @@ def predict_last_apertura():
     print("(py): GET /predict_last_apertura")
     try:
         # Cargar datos históricos
-        data_file = pd.read_csv('./database/corr_bitcoin_diario_apertura.csv')
+        data_file = pd.read_csv('./database/bitcoin_apertura_2013_actual.csv')
         datos = data_file['apertura'].to_numpy().reshape(-1, 1)
         # Tomar los últimos 'ventana' valores
         last_window = datos[-ventana:]
@@ -129,7 +129,7 @@ def predict_last_clausura():
     print("(py): GET /predict_last_clausura")
     try:
         # Cargar datos históricos
-        data_file = pd.read_csv('./database/corr_bitcoin_diario_clausura.csv')
+        data_file = pd.read_csv('./database/bitcoin_cierre_2013_actual.csv')
         datos = data_file['clausura'].to_numpy().reshape(-1, 1)
         # Tomar los últimos 'ventana' valores
         last_window = datos[-ventana:]
