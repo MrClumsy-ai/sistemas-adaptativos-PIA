@@ -4,6 +4,8 @@
 
 ## Para iniciar el servidor:
 
+0. dependencias para python: flask, pandas, keras, tensorflow, joblib, scikit-learn, seaborn, yfinance
+
 1. Instalar golang: https://go.dev/doc/install
 2. Ir al directorio en una terminal e instalar todos los paquetes del proyecto
 
