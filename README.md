@@ -6,10 +6,12 @@
 
 1. Instalar python 3.12 (no 3.13, porque tensorflow no funciona en esa version): https://www.python.org/downloads/
 2. Instalar dependencias de python
+
 ```
 py -3.12 -m ensurepip --upgrade
 py -3.12 -m pip install flask pandas keras tensorflow joblib scikit-learn seaborn yfinance
 ```
+
 3. Instalar golang: https://go.dev/doc/install
 4. Ir al directorio en una terminal e instalar todos los paquetes del proyecto
 
@@ -25,12 +27,14 @@ go run main.go
 ```
 
 6. Esperar a que en la terminal salga algo como:
+
 ```
 WARNING:absl:Compiled the loaded model, but the compiled metrics have yet to be built. `model.compile_metrics` will be empty until you train or evaluate the model.
 WARNING:absl:Compiled the loaded model, but the compiled metrics have yet to be built. `model.compile_metrics` will be empty until you train or evaluate the model.
 WARNING:werkzeug: * Debugger is active!
 INFO:werkzeug: * Debugger PIN: 256-911-240
 ```
+
 7. Ir a la ubicacion desde un navegador web: http://localhost:8080/
 8. Una vez que hicieron cambios, para verlos en accion, regresar a la terminal y presionar <kbd>Ctrl</kbd> + <kbd>C</kbd> y regresar al paso #3
 
@@ -80,13 +84,15 @@ git commit -m "mensaje corto describiendo tus cambios" -m "mensaje mas largo des
 git pull --rebase
 git push
 ```
+
 15. Si es que sale algún error en
-```git pull --rebase```
-abortar el rebase usando
-```git rebase --abort```
-usar ahora un git pull regular y arreglar los conflictos de merge
-```git pull```
-una vez resueltos los conflictos, hacer otro commit con el mensaje de "merge"
+    `git pull --rebase`
+    abortar el rebase usando
+    `git rebase --abort`
+    usar ahora un git pull regular y arreglar los conflictos de merge
+    `git pull`
+    una vez resueltos los conflictos, hacer otro commit con el mensaje de "merge"
+
 ```
 git add .
 git commit -m "merge"
