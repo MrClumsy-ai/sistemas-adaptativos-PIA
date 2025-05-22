@@ -4,31 +4,35 @@
 
 ## Para iniciar el servidor:
 
-0. dependencias para python: flask, pandas, keras, tensorflow, joblib, scikit-learn, seaborn, yfinance
-
-1. Instalar golang: https://go.dev/doc/install
-2. Ir al directorio en una terminal e instalar todos los paquetes del proyecto
+1. Instalar python 3.12 (no 3.13, porque tensorflow no funciona en esa version): https://www.python.org/downloads/
+2. Instalar dependencias de python
+```
+py -3.12 -m ensurepip --upgrade
+py -3.12 -m pip install flask pandas keras tensorflow joblib scikit-learn seaborn yfinance
+```
+3. Instalar golang: https://go.dev/doc/install
+4. Ir al directorio en una terminal e instalar todos los paquetes del proyecto
 
 ```
 cd ubicacion/del/proyecto
 go mod tidy
 ```
 
-3. Correr el servidor con go run
+5. Correr el servidor con go run
 
 ```
 go run main.go
 ```
 
-4. Esperar a que en la terminal salga algo como:
+6. Esperar a que en la terminal salga algo como:
 ```
 WARNING:absl:Compiled the loaded model, but the compiled metrics have yet to be built. `model.compile_metrics` will be empty until you train or evaluate the model.
 WARNING:absl:Compiled the loaded model, but the compiled metrics have yet to be built. `model.compile_metrics` will be empty until you train or evaluate the model.
 WARNING:werkzeug: * Debugger is active!
 INFO:werkzeug: * Debugger PIN: 256-911-240
 ```
-5. Ir a la ubicacion desde un navegador web: http://localhost:8080/
-6. Una vez que hicieron cambios, para verlos en accion, regresar a la terminal y presionar <kbd>Ctrl</kbd> + <kbd>C</kbd> y regresar al paso #3
+7. Ir a la ubicacion desde un navegador web: http://localhost:8080/
+8. Una vez que hicieron cambios, para verlos en accion, regresar a la terminal y presionar <kbd>Ctrl</kbd> + <kbd>C</kbd> y regresar al paso #3
 
 ## Para trabajar
 
