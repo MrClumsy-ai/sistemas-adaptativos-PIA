@@ -15,8 +15,10 @@ import (
 	"github.com/labstack/echo/v4"
 )
 
-const PORT = ":8080"
-const URL = "http://localhost" + PORT
+const (
+	PORT = ":8080"
+	URL  = "http://localhost" + PORT
+)
 
 /*
 uso en front-end con go:
@@ -65,7 +67,7 @@ func newTemplate() *Templates {
 var pythonProcess *exec.Cmd
 
 func startPythonAPI() error {
-	pythonProcess = exec.Command("py", "-3.12", "api.py")
+	pythonProcess = exec.Command("python3", "api.py")
 	pythonProcess.Stdout = os.Stdout
 	pythonProcess.Stderr = os.Stderr
 	err := pythonProcess.Start()
