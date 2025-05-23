@@ -90,8 +90,8 @@ def process_data():
 # --- 4. Exportar a CSV ---
 def export_to_csv(df_apertura, df_cierre):
     try:
-        file_apertura = "bitcoin_apertura_2013_actual.csv"
-        file_cierre = "bitcoin_cierre_2013_actual.csv"
+        file_apertura = "database/bitcoin_apertura_2013_actual.csv"
+        file_cierre = "database/bitcoin_cierre_2013_actual.csv"
         df_apertura.to_csv(file_apertura, index=False,
                            sep=",", encoding="utf-8")
         df_cierre.to_csv(file_cierre, index=False, sep=",", encoding="utf-8")
