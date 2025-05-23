@@ -65,6 +65,7 @@ func newTemplate() *Templates {
 }
 
 var pythonProcess *exec.Cmd
+var fetchData *exec.Cmd
 
 func startPythonAPI() error {
 	pythonProcess = exec.Command("python3.12", "api.py")
@@ -89,6 +90,29 @@ func stopPythonAPI() error {
 	return errors.New("No python process started")
 }
 
+func startFetching() error {
+	fetchData = exec.Command("python3.12", "database/getDB.py")
+	fetchData.Stdout = os.Stdout
+	fetchData.Stderr = os.Stderr
+	err := fetchData.Start()
+	if err != nil {
+		return err
+	}
+	time.Sleep(2 * time.Second)
+	return nil
+}
+
+func stopFetching() error {
+	if fetchData != nil && fetchData.Process != nil {
+		err := fetchData.Process.Signal(syscall.SIGTERM)
+		if err != nil {
+			return err
+		}
+		return nil
+	}
+	return errors.New("No python process started")
+}
+
 func main() {
 	e := echo.New()
 	e.Static("/assets", "assets")
@@ -98,6 +122,11 @@ func main() {
 		e.Logger.Fatal(err)
 	}
 	defer stopPythonAPI()
+	err = startFetching()
+	if err != nil {
+		e.Logger.Fatal(err)
+	}
+	defer stopFetching()
 
 	e.GET("/", func(c echo.Context) error {
 		fmt.Println("(go): GET /")
