@@ -5,24 +5,8 @@
     <title>Prediccion Bitcoin</title>
     {{ template "librerias" .}}
     {{ template "meta" .}}
+
     <style>
-      .data-table {
-        width: 100%;
-        border-collapse: collapse;
-      }
-
-      .data-table thead,
-      .data-table tbody tr {
-        display: table;
-        width: 100%;
-        table-layout: fixed;
-      }
-
-      .data-table tbody {
-        display: block;
-        max-height: 200px; 
-        overflow-y: auto;
-      }
       .scroll-vertical {
         height: 150px;
         overflow: hidden;
@@ -48,14 +32,17 @@
       }
     </style>
   </head>
-  <body >
+  <body>
     <div class="container">
       <header class="main-header">Pascal</header>
       <h2 class="subtitle">Dashboard Bitcoin</h2>
+
       <main class="dashboard">
         <section class="main-chart">
-        <canvas id="miGraficoVelas"></canvas>
-        <div id="dashboardCarousel" class="carousel slide mt-4" data-bs-ride="carousel">
+          <canvas id="miGraficoVelas"></canvas>
+
+          <!-- 🎠 Carrusel en el dashboard -->
+          <div id="dashboardCarousel" class="carousel slide mt-4" data-bs-ride="carousel">
             <div class="carousel-inner">
               <div class="carousel-item active">
                 <img src="assets/img/dash1.jpg" class="d-block w-100" alt="Slide 1">
@@ -74,17 +61,8 @@
               <span class="carousel-control-next-icon"></span>
             </button>
           </div>
-          <script>
-            // Datos de ejemplo para Bitcoin
-            const datosBTC = [
-              {t: new Date('2024-01-01').getTime(), o: 42000, h: 43800, l: 41500, c: 43200},
-              {t: new Date('2024-01-02').getTime(), o: 43200, h: 44500, l: 42800, c: 44000},
-              {t: new Date('2024-01-03').getTime(), o: 44000, h: 45200, l: 43500, c: 43500},
-              {t: new Date('2024-01-04').getTime(), o: 43500, h: 44200, l: 42800, c: 43800},
-              {t: new Date('2024-01-05').getTime(), o: 43800, h: 44800, l: 43200, c: 44500},
-            ];
 
-            // Configuración del gráfico
+          <script>
             const config = {
               type: 'candlestick',
               data: {
@@ -137,7 +115,6 @@
               }
             };
 
-            // Inicializar el gráfico
             const ctx = document.getElementById('miGraficoVelas').getContext('2d');
             new Chart(ctx, config);
           </script>
@@ -145,7 +122,7 @@
 
         <aside class="side-panel">
           <div class="box box-top">
-          <h3>📋 Datos en Tiempo Real</h3>
+            <h3>📋 Datos en Tiempo Real</h3>
             <table class="data-table" id="topTable">
               <thead>
                 <tr>
@@ -166,8 +143,9 @@
               <img src="assets/img/top-scroll.jpg" alt="Scroll Top">
             </div>
           </div>
+
           <div class="box box-bottom">
-           <h3>📊 Histórico Reciente</h3>
+            <h3>📊 Histórico Reciente</h3>
             <table class="data-table" id="bottomTable">
               <thead>
                 <tr>
@@ -182,11 +160,12 @@
                 </tr>
               </tbody>
             </table>
+
             <!-- 📜 Imagen con desplazamiento vertical en box-bottom -->
             <div class="scroll-vertical">
               <img src="assets/img/bottom-scroll.jpg" alt="Scroll Bottom">
             </div>
-            </div>
+          </div>
         </aside>
       </main>
     </div>
@@ -195,35 +174,25 @@
 {{ end }}
 
 <script>
-      // Sistema de actualización
-      function actualizarTablas() {
-        // Lógica para actualizar topTableBody
-        // fetch().then().then(data => { ... })
-        
-        // Ejemplo básico de actualización
-        const ahora = new Date().toLocaleTimeString();
-        
-        // Top Table (Ejemplo estático)
-        //document.getElementById('topTableBody').innerHTML = `
-          //<tr>
-            //<td>${ahora}</td>
-            //<td>BTC/USD</td>
-            //<td>${(Math.random() * 1000).toFixed(2)}</td>
-          //</tr>
-        //` + document.getElementById('topTableBody').innerHTML;
-        
-        // Bottom Table (Ejemplo estático)
-        //document.getElementById('bottomTableBody').innerHTML = `
-          //<tr>
-            //<td>${new Date().toLocaleDateString()}</td>
-            //<td>${(Math.random() * 1000).toFixed(2)}</td>
-            //<td>${(Math.random() * 1000).toFixed(2)}</td>
-          //</tr>
-        //` + document.getElementById('bottomTableBody').innerHTML;
-      }
+  function actualizarTablas() {
+    const ahora = new Date().toLocaleTimeString();
+    document.getElementById('topTableBody').innerHTML = `
+      <tr>
+        <td>${ahora}</td>
+        <td>BTC/USD</td>
+        <td>${(Math.random() * 1000).toFixed(2)}</td>
+      </tr>
+    ` + document.getElementById('topTableBody').innerHTML;
 
-      // Actualizar cada 5 segundos (5000 ms)
-      //setInterval(actualizarTablas, 5000);
-      // Ejecutar primera vez
-      //actualizarTablas();
+    document.getElementById('bottomTableBody').innerHTML = `
+      <tr>
+        <td>${new Date().toLocaleDateString()}</td>
+        <td>${(Math.random() * 1000).toFixed(2)}</td>
+        <td>${(Math.random() * 1000).toFixed(2)}</td>
+      </tr>
+    ` + document.getElementById('bottomTableBody').innerHTML;
+  }
+
+  setInterval(actualizarTablas, 5000);
+  actualizarTablas();
 </script>
