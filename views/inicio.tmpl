@@ -125,6 +125,7 @@
             new Chart(ctx, config);
           </script>
         </section>
+
         <aside class="side-panel">
           <div class="box box-top">
           <h3>📋 Datos en Tiempo Real</h3>
@@ -137,12 +138,16 @@
                 </tr>
               </thead>
               <tbody id="topTableBody">
-                <!-- Datos dinámicos irán aquí -->
                 <tr class="loading">
                   <td colspan="3">Cargando datos...</td>
                 </tr>
               </tbody>
             </table>
+
+            <!-- 📜 Imagen con desplazamiento vertical en box-top -->
+            <div class="scroll-vertical">
+              <img src="assets/img/top-scroll.jpg" alt="Scroll Top">
+            </div>
           </div>
           <div class="box box-bottom">
            <h3>📊 Histórico Reciente</h3>
@@ -155,13 +160,15 @@
                 </tr>
               </thead>
               <tbody id="bottomTableBody">
-                <!-- Datos dinámicos irán aquí -->
                 <tr class="loading">
                   <td colspan="3">Cargando datos...</td>
                 </tr>
               </tbody>
             </table>
-          </div>
+            <!-- 📜 Imagen con desplazamiento vertical en box-bottom -->
+            <div class="scroll-vertical">
+              <img src="assets/img/bottom-scroll.jpg" alt="Scroll Bottom">
+            </div>
         </aside>
       </main>
     </div>
