@@ -91,7 +91,7 @@ func stopPythonAPI() error {
 }
 
 func startFetching() error {
-	fetchData = exec.Command("python3.12", "database/getDB.py")
+	fetchData = exec.Command("python", "database/getDB.py")
 	fetchData.Stdout = os.Stdout
 	fetchData.Stderr = os.Stderr
 	err := fetchData.Start()
