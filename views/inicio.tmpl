@@ -6,6 +6,23 @@
     {{ template "librerias" .}}
     {{ template "meta" .}}
     <style>
+      .data-table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+
+      .data-table thead,
+      .data-table tbody tr {
+        display: table;
+        width: 100%;
+        table-layout: fixed;
+      }
+
+      .data-table tbody {
+        display: block;
+        max-height: 200px; 
+        overflow-y: auto;
+      }
       .scroll-vertical {
         height: 150px;
         overflow: hidden;
@@ -169,6 +186,7 @@
             <div class="scroll-vertical">
               <img src="assets/img/bottom-scroll.jpg" alt="Scroll Bottom">
             </div>
+            </div>
         </aside>
       </main>
     </div>
@@ -186,26 +204,26 @@
         const ahora = new Date().toLocaleTimeString();
         
         // Top Table (Ejemplo estático)
-        document.getElementById('topTableBody').innerHTML = `
-          <tr>
-            <td>${ahora}</td>
-            <td>BTC/USD</td>
-            <td>${(Math.random() * 1000).toFixed(2)}</td>
-          </tr>
-        ` + document.getElementById('topTableBody').innerHTML;
+        //document.getElementById('topTableBody').innerHTML = `
+          //<tr>
+            //<td>${ahora}</td>
+            //<td>BTC/USD</td>
+            //<td>${(Math.random() * 1000).toFixed(2)}</td>
+          //</tr>
+        //` + document.getElementById('topTableBody').innerHTML;
         
         // Bottom Table (Ejemplo estático)
-        document.getElementById('bottomTableBody').innerHTML = `
-          <tr>
-            <td>${new Date().toLocaleDateString()}</td>
-            <td>${(Math.random() * 1000).toFixed(2)}</td>
-            <td>${(Math.random() * 1000).toFixed(2)}</td>
-          </tr>
-        ` + document.getElementById('bottomTableBody').innerHTML;
+        //document.getElementById('bottomTableBody').innerHTML = `
+          //<tr>
+            //<td>${new Date().toLocaleDateString()}</td>
+            //<td>${(Math.random() * 1000).toFixed(2)}</td>
+            //<td>${(Math.random() * 1000).toFixed(2)}</td>
+          //</tr>
+        //` + document.getElementById('bottomTableBody').innerHTML;
       }
 
       // Actualizar cada 5 segundos (5000 ms)
-      setInterval(actualizarTablas, 5000);
+      //setInterval(actualizarTablas, 5000);
       // Ejecutar primera vez
-      actualizarTablas();
+      //actualizarTablas();
 </script>
