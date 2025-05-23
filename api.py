@@ -11,7 +11,7 @@ scaler_clausura = joblib.load("./modelos/scaler_clausura.save")
 model_clausura = load_model("./modelos/mejor_modelo_clausura.h5")
 scaler_apertura = joblib.load("./modelos/scaler_apertura.save")
 model_apertura = load_model("./modelos/mejor_modelo_apertura.h5")
-ventana = 30  # Tamaño de ventana temporal
+ventana = 90  # Tamaño de ventana temporal
 
 
 def generar_ventanas(datos_preproc, ventana):
