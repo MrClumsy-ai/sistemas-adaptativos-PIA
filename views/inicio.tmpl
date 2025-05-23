@@ -5,6 +5,31 @@
     <title>Prediccion Bitcoin</title>
     {{ template "librerias" .}}
     {{ template "meta" .}}
+    <style>
+      .scroll-vertical {
+        height: 150px;
+        overflow: hidden;
+        position: relative;
+        border: 1px solid #ccc;
+        margin-top: 1rem;
+      }
+
+      .scroll-vertical img {
+        position: absolute;
+        width: 100%;
+        animation: scrollImg 10s linear infinite;
+      }
+
+      @keyframes scrollImg {
+        0% { top: 100%; }
+        100% { top: -100%; }
+      }
+
+      .carousel img {
+        max-height: 200px;
+        object-fit: cover;
+      }
+    </style>
   </head>
   <body >
     <div class="container">
