@@ -67,7 +67,7 @@ func newTemplate() *Templates {
 var pythonProcess *exec.Cmd
 
 func startPythonAPI() error {
-	pythonProcess = exec.Command("py", "-3.12", "api.py")
+	pythonProcess = exec.Command("python","api.py")
 	pythonProcess.Stdout = os.Stdout
 	pythonProcess.Stderr = os.Stderr
 	err := pythonProcess.Start()
