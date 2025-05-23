@@ -68,7 +68,7 @@ var pythonProcess *exec.Cmd
 var fetchData *exec.Cmd
 
 func startPythonAPI() error {
-	pythonProcess = exec.Command("python3", "api.py")
+	pythonProcess = exec.Command("python3.12", "api.py")
 	pythonProcess.Stdout = os.Stdout
 	pythonProcess.Stderr = os.Stderr
 	err := pythonProcess.Start()
