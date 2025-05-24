@@ -89,3 +89,25 @@ body {
 .carousel img {
   object-fit: cover;
 }
+
+.box-tabla {
+    background: rgba(255, 255, 255, 0);
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+    padding: 20px 30px;
+    width: 320px;
+    max-width: 90vw;
+  }
+
+  .scroll-vertical {
+    max-height: 280px;
+    overflow-y: auto;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9rem;
+  }
